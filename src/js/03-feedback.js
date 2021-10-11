@@ -1,53 +1,45 @@
 import throttle from 'lodash.throttle';
 const STORAGE_KEY = 'feedback-form-state';
 
-// Переглянути і доробити для всієї форми!!!
-// https://youtu.be/Fh8d14cY9AM?t=2636
-
 const formData = {};
 const refs = {
   formEl: document.querySelector('.feedback-form'),
   emailEl: document.querySelector('input[type = "email"]'),
   messageEl: document.querySelector('textarea[name = "message"]'),
-  btnEl: document.querySelector('button[type = "submit"]'),
+  //   btnEl: document.querySelector('button[type = "submit"]'),
 };
+
 refs.formEl.addEventListener('input', e => {
   //   console.log(e.target.name);
   //   console.log(e.target.value);
   formData[e.target.name] = e.target.value;
-  console.log(formData);
+  //   console.log(formData);
 });
+
+refs.formEl.addEventListener('submit', onFormSubmit);
+refs.formEl.addEventListener('input', throttle(onTextareaInput, 500));
 
 popularTextarea();
 
-refs.formEl.addEventListener('submit', onFormSubmit);
-refs.messageEl.addEventListener('input', throttle(onTextareainput, 500));
-
-//Після відправки повідомлення очищає форму
 function onFormSubmit(e) {
   e.preventDefault();
-  console.log('Відправили форму!');
+  console.log('Ви успішно відправили форму!');
   e.currentTarget.reset();
   localStorage.removeItem(STORAGE_KEY);
 }
 
-//Записує інфу з поля повідомлення, в localStorage (завжди тип рядок)
-function onTextareainput(e) {
-  const message = e.target.value;
+function onTextareaInput(e) {
+  const message = JSON.stringify(formData);
+  //   console.log(message);
   localStorage.setItem(STORAGE_KEY, message);
 }
 
-//Після перезагрузки сторінки видає інфу, яку тримає в localStorage
 function popularTextarea() {
   const savedMessage = localStorage.getItem(STORAGE_KEY);
-  if (savedMessage) {
-    console.log(savedMessage);
-    refs.messageEl.value = savedMessage;
+  const parsedMessage = JSON.parse(savedMessage);
+  if (parsedMessage) {
+    // console.log('parsedMessage:', parsedMessage);
+    refs.messageEl.value = parsedMessage.message;
+    refs.emailEl.value = parsedMessage.email;
   }
 }
-
-// localStorage.setItem(STORAGE_KEY, JSON.stringify({ email: 'Mango', message: 'qwerty' }));
-// const savedData = localStorage.getItem(STORAGE_KEY);
-// console.log(savedData);
-// const parseddata = JSON.parse(savedData);
-// console.log(parseddata);
