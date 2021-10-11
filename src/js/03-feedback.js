@@ -1,6 +1,9 @@
 import throttle from 'lodash.throttle';
 const STORAGE_KEY = 'feedback-form-state';
 
+// Переглянути і доробити для всієї форми!!!
+// https://youtu.be/Fh8d14cY9AM?t=2636
+
 const formData = {};
 const refs = {
   formEl: document.querySelector('.feedback-form'),
@@ -20,6 +23,7 @@ popularTextarea();
 refs.formEl.addEventListener('submit', onFormSubmit);
 refs.messageEl.addEventListener('input', throttle(onTextareainput, 500));
 
+//Після відправки повідомлення очищає форму
 function onFormSubmit(e) {
   e.preventDefault();
   console.log('Відправили форму!');
@@ -27,11 +31,13 @@ function onFormSubmit(e) {
   localStorage.removeItem(STORAGE_KEY);
 }
 
+//Записує інфу з поля повідомлення, в localStorage (завжди тип рядок)
 function onTextareainput(e) {
   const message = e.target.value;
   localStorage.setItem(STORAGE_KEY, message);
 }
 
+//Після перезагрузки сторінки видає інфу, яку тримає в localStorage
 function popularTextarea() {
   const savedMessage = localStorage.getItem(STORAGE_KEY);
   if (savedMessage) {
@@ -40,9 +46,7 @@ function popularTextarea() {
   }
 }
 
-// https://youtu.be/Fh8d14cY9AM?t=2636
 // localStorage.setItem(STORAGE_KEY, JSON.stringify({ email: 'Mango', message: 'qwerty' }));
-
 // const savedData = localStorage.getItem(STORAGE_KEY);
 // console.log(savedData);
 // const parseddata = JSON.parse(savedData);
