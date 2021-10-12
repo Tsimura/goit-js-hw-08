@@ -10,7 +10,7 @@ player.on('timeupdate', throttle(playedTime, 1000));
 
 function playedTime(currentTime) {
   //   console.log('Відео відтворюється! Поточний час:', currentTime);
-  console.log('currentTime:', currentTime);
+  //   console.log('currentTime:', currentTime);
   const time = JSON.stringify(currentTime);
   //   console.log('time', time);
   localStorage.setItem(STORAGE_KEY, time);
@@ -21,8 +21,8 @@ iframe.addEventListener('play', onCurrentTime);
 function onCurrentTime(data) {
   const savedCurrentTime = JSON.stringify(currentTime);
   localStorage.setItem(STORAGE_KEY, savedCurrentTime);
-  console.log(JSON.stringify(savedCurrentTime));
-  console.log(savedCurrentTime);
+  //   console.log(JSON.stringify(savedCurrentTime));
+  //   console.log(savedCurrentTime);
 }
 let savedTime = localStorage.getItem(STORAGE_KEY);
 let parsedTime = JSON.parse(savedTime);
