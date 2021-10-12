@@ -10,10 +10,10 @@ const refs = {
 };
 
 refs.formEl.addEventListener('input', e => {
-  //   console.log(e.target.name);
-  //   console.log(e.target.value);
+  // console.log(e.target.name);
+  // console.log(e.target.value);
   formData[e.target.name] = e.target.value;
-  //   console.log(formData);
+  // console.log(formData);
 });
 
 refs.formEl.addEventListener('submit', onFormSubmit);
@@ -38,8 +38,20 @@ function popularTextarea() {
   const savedMessage = localStorage.getItem(STORAGE_KEY);
   const parsedMessage = JSON.parse(savedMessage);
   if (parsedMessage) {
-    // console.log('parsedMessage:', parsedMessage);
-    refs.messageEl.value = parsedMessage.message;
-    refs.emailEl.value = parsedMessage.email;
+    // console.log('parsedMessage', parsedMessage);
+    // console.log('message:', parsedMessage.message);
+    // console.log('email:', parsedMessage.email);
+
+    // refs.messageEl.value = parsedMessage.message;
+    // refs.emailEl.value = parsedMessage.email;
+
+    parsedMessage.message == undefined
+      ? (refs.messageEl.value = ' ')
+      : (refs.messageEl.value = parsedMessage.message);
+    console.log('message:', refs.messageEl.value);
+    parsedMessage.email == undefined
+      ? (refs.emailEl.value = ' ')
+      : (refs.emailEl.value = parsedMessage.email);
+    console.log('email:', refs.emailEl.value);
   }
 }
