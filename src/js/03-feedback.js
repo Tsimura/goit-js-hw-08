@@ -9,9 +9,13 @@ const refs = {
 
 function onFormSubmit(e) {
   e.preventDefault();
-  console.log('Ви успішно відправили форму!', formData);
-  e.currentTarget.reset();
-  localStorage.removeItem(STORAGE_KEY);
+  if (formData.email == '' || formData.message == '') {
+    alert('Всі поля повинні бути заповнені!');
+  } else {
+    console.log('Ви успішно відправили форму!', formData);
+    e.currentTarget.reset();
+    localStorage.removeItem(STORAGE_KEY);
+  }
 }
 
 const formData = {
